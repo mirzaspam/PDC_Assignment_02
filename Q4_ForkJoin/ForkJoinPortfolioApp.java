@@ -10,5 +10,10 @@ public class ForkJoinPortfolioApp {
         for (int i = 0; i < size; i++) {
             assets[i] = 100 + rand.nextDouble() * 900;   // 100 to 1000
         }
+        // Serial
+        long s1 = System.nanoTime();
+        double serialSum = 0;
+        for (int i = 0; i < size; i++) serialSum += assets[i];
+        long serialTime = System.nanoTime() - s1;
     }
 }
