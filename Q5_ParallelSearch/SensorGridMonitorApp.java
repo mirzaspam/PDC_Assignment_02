@@ -26,5 +26,30 @@ public class SensorGridMonitorApp {
             minThreads[w] = new Thread(mins[w], "MinWorker-" + w);
             maxThreads[w] = new Thread(maxs[w], "MaxWorker-" + w);
         }
+
+        // start min and max searches together
+        for (int w = 0; w < workers; w++) {
+            minThreads[w].start();
+            maxThreads[w].start();
+        }
+        for (int w = 0; w < workers; w++) {
+            minThreads[w].join();
+            maxThreads[w].join();
+        }
+
+        // combine partial results into global values
+        double globalMin = mins[0].getMin();
+        double globalMax = maxs[0].getMax();
+        for (int w = 0; w < workers; w++) {
+            System.out.println("Segment " + w + " -> min: " + mins[w].getMin()
+                    + ", max: " + maxs[w].getMax());
+            if (mins[w].getMin() < globalMin) globalMin = mins[w].getMin();
+            if (maxs[w].getMax() > globalMax) globalMax = maxs[w].getMax();
+        }
+
+        long elapsed = System.nanoTime() - startTime;
+        System.out.println("Global minimum temperature : " + globalMin);
+        System.out.println("Global peak vibration      : " + globalMax);
+        System.out.println("Execution time: " + elapsed / 1000 + " microseconds");
     }
 }
