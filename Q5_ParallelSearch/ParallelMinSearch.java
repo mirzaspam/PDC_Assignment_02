@@ -11,4 +11,5 @@ public class ParallelMinSearch extends SensorSearchEngine {
             if (sensorData[i] < minValue) minValue = sensorData[i];
         }
     }
+    public double getMin() { return minValue; }
 }
