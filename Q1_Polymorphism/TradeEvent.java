@@ -8,4 +8,10 @@ public class TradeEvent {
         this.timestamp = timestamp;
         this.basePrice = basePrice;
     }
+
+public void dispatch() {
+        System.out.println("[GENERIC EVENT] Sender: " + senderId
+                + " | Time: " + timestamp
+                + " | Base Price: " + basePrice);
+    }
 }
