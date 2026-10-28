@@ -28,5 +28,22 @@ public class InventoryCatalogManager {
                 }
             }
         };
+        long start = System.nanoTime();
+        for (int t = 0; t < THREADS; t++) {
+            pool.submit(worker);
+        }
+        pool.shutdown();
+        pool.awaitTermination(1, TimeUnit.MINUTES);
+        long elapsedNs = System.nanoTime() - start;
+
+        double ms = elapsedNs / 1_000_000.0;
+        long totalOps = (long) THREADS * OPS_PER_THREAD;
+        double throughput = totalOps / (elapsedNs / 1_000_000_000.0);
+
+        System.out.println("--- " + name + " ---");
+        System.out.println("Total operations: " + totalOps);
+        System.out.println("Execution time  : " + ms + " ms");
+        System.out.println("Throughput      : " + (long) throughput + " ops/sec");
     }
 }
+
