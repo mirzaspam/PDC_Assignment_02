@@ -45,5 +45,11 @@ public class CacheLocalityBenchmark {
             rowTotal += rowMs;
             colTotal += colMs;
         }
+        double rowAvg = rowTotal / runs;
+        double colAvg = colTotal / runs;
+        System.out.println("Average Row-Major    : " + rowAvg + " ms");
+        System.out.println("Average Column-Major : " + colAvg + " ms");
+        System.out.println("Speedup (Row over Column): " + (colAvg / rowAvg) + "x");
+        System.out.println("Checksum: " + checkSum);
     }
 }
