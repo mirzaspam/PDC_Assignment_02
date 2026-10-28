@@ -45,5 +45,9 @@ public class InventoryCatalogManager {
         System.out.println("Execution time  : " + ms + " ms");
         System.out.println("Throughput      : " + (long) throughput + " ops/sec");
     }
+    public static void benchmarkSynchronizedMap() throws InterruptedException {
+        Map<String, Integer> map = Collections.synchronizedMap(new HashMap<>());
+        runBenchmark("Collections.synchronizedMap", map);
+    }
 }
 
