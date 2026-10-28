@@ -20,4 +20,15 @@ public class CacheLocalityBenchmark {
         }
         return sum;
     }
+    public static void main(String[] args) {
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                matrix[i][j] = i + j;
+            }
+        }
+
+        int runs = 10;
+        double rowTotal = 0, colTotal = 0;
+        double checkSum = 0;   // printed so the JIT can't skip the work
+    }
 }
