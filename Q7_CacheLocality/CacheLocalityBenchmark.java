@@ -29,6 +29,21 @@ public class CacheLocalityBenchmark {
 
         int runs = 10;
         double rowTotal = 0, colTotal = 0;
-        double checkSum = 0;   // printed so the JIT can't skip the work
+        double checkSum = 0;
+           // printed so the JIT can't skip the work
+        for (int r = 1; r <= runs; r++) {
+            long t1 = System.nanoTime();
+            checkSum += traverseRowMajor();
+            double rowMs = (System.nanoTime() - t1) / 1_000_000.0;
+
+            long t2 = System.nanoTime();
+            checkSum += traverseColumnMajor();
+            double colMs = (System.nanoTime() - t2) / 1_000_000.0;
+
+            System.out.println("Run " + r + " | Row-Major: " + rowMs
+                    + " ms | Column-Major: " + colMs + " ms");
+            rowTotal += rowMs;
+            colTotal += colMs;
+        }
     }
 }
