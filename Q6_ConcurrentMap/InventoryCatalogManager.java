@@ -53,5 +53,9 @@ public class InventoryCatalogManager {
         Map<String, Integer> map = new ConcurrentHashMap<>();
         runBenchmark("ConcurrentHashMap", map);
     }
+    public static void main(String[] args) throws InterruptedException {
+        benchmarkSynchronizedMap();
+        benchmarkConcurrentMap();
+    }
 }
 
