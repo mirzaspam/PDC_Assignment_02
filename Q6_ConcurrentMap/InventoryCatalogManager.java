@@ -12,4 +12,21 @@ public class InventoryCatalogManager {
             map.put("P" + i, 100);
         }
     }
+    private static void runBenchmark(String name, Map<String, Integer> map)
+            throws InterruptedException {
+        fillCatalog(map);
+        ExecutorService pool = Executors.newFixedThreadPool(THREADS);
+
+        Runnable worker = () -> {
+            Random rand = new Random();
+            for (int i = 0; i < OPS_PER_THREAD; i++) {
+                String id = "P" + rand.nextInt(PRODUCTS);
+                if (i % 2 == 0) {
+                    map.get(id);                         // lookup
+                } else {
+                    map.merge(id, 1, Integer::sum);      // atomic update
+                }
+            }
+        };
+    }
 }
